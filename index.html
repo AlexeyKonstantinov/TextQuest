@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TextQuest</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="game.js"></script>
+</head>
+<body>
+    <div class="main-menu" id="main-menu">
+        <img src="resources/cat.jpeg" class="main-menu-icon">
+        <p>Текстовый квест</p>
+        <button id="start-btn">Start</button>
+    </div>
+
+    <div class="passage" id="passage" style="display: none" >
+        <img src="resources/cat.jpeg" class="passage-image" id="passage-image">
+        <p class="passage-text" id="passage-text">Текст Пассажа</p>
+        <div class="option-buttons" id="option-buttons">
+
+        </div>
+    </div>
+
+    <div class="finish-menu" id="finish-menu" style="display: none;">
+        <img src="resources/cat.jpeg" class="finish-menu-image">
+        <p class="finish-menu-text" id="finish-menu-text">конец</p>
+        <button class="finish-button" id="finish-button"> Меню</button>
+    </div>
+</body>
+</html>
