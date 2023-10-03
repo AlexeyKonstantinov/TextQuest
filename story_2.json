@@ -1,0 +1,65 @@
+{
+    "uuid": "8AE8326C-4F67-4746-BA7D-4B475A60F61C",
+    "name": "test_1",
+    "passages": [
+      {
+        "name": "Безымянный параграф",
+        "tags": "start",
+        "id": "1",
+        "text": "Ты оказался в темном замке\n[[1.1 <- Привет]]\n[[1.2 <- Пока]]",
+        "links": [
+          {
+            "linkText": "Привет",
+            "passageName": "1.1",
+            "original": "[[1.1 <- Привет]]"
+          },
+          {
+            "linkText": "Пока",
+            "passageName": "1.2",
+            "original": "[[1.2 <- Пока]]"
+          }
+        ],
+        "hooks": [],
+        "cleanText": "Ты оказался в темном замке"
+      },
+      {
+        "name": "1.1",
+        "tags": "img1",
+        "id": "2",
+        "text": "Ну привет\n[[2.1<-конец]]",
+        "links": [
+          {
+            "linkText": "конец",
+            "passageName": "2.1",
+            "original": "[[2.1<-конец]]"
+          }
+        ],
+        "hooks": [],
+        "cleanText": "Ну привет"
+      },
+      {
+        "name": "1.2",
+        "tags": "",
+        "id": "3",
+        "text": "Ну пока\n[[2.1<-конец]]",
+        "links": [
+          {
+            "linkText": "конец",
+            "passageName": "2.1",
+            "original": "[[2.1<-конец]]"
+          }
+        ],
+        "hooks": [],
+        "cleanText": "Ну пока"
+      },
+      {
+        "name": "2.1",
+        "tags": "finish",
+        "id": "4",
+        "text": "Ты ничего не добился.",
+        "links": [],
+        "hooks": [],
+        "cleanText": "Ты ничего не добился."
+      }
+    ]
+  }
