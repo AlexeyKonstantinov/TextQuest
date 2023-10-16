@@ -1,3 +1,7 @@
+document.addEventListener("contextmenu", function(event) {
+  event.preventDefault();
+});
+
 const phrases = [
   "Готов к экшену?",
   "Ты будешь рассказывать об этом внукам 💯",
@@ -9,6 +13,9 @@ const phrases = [
 const mainText = document.getElementById("main-text");
 const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
 mainText.textContent = randomPhrase;
+
+const STORAGE_KEY = "game_saves";
+//localStorage.removeItem(STORAGE_KEY) -- стереть все сейвы
 
 const views = {
   MAIN_MENU: "view-main-menu",
@@ -46,7 +53,7 @@ function showView(viewId, displayStyle) {
   view_state.openedPopups.length = 0; // очистка массива
 }
 
-function openPopup(popupId, displayStyle) {
+function showPopup(popupId, displayStyle) {
   const popup = document.getElementById(popupId);
   if (view_state.openedPopups.includes(popup)) {
     return;
@@ -55,7 +62,7 @@ function openPopup(popupId, displayStyle) {
   popup.style.display = displayStyle;
 }
 
-function closePopup(popupId){
+function hidePopup(popupId){
   const popup = document.getElementById(popupId);
   const index = view_state.openedPopups.indexOf(popup);
   if (index !== -1) {
@@ -66,8 +73,6 @@ function closePopup(popupId){
   }
 }
 
-showView(views.MAIN_MENU, views_styles.MAIN_MENU)
-
 const startBtn = document.getElementById("start-btn");
 const endingsBtn = document.getElementById("endings-btn");
 const backToMenuBtn1 = document.getElementById("back-to-menu-btn1");
@@ -76,114 +81,86 @@ const finishBtn = document.getElementById("finish-button")
 const passageImage = document.getElementById("passage-image");
 const passageText = document.getElementById("passage-text");
 const optionButtons = document.getElementById("option-buttons");
-const endingsContainer = document.getElementById("endings-container");
+const endingButtonsContainer = document.getElementById("endings-container");
 const popupEnding = document.getElementById('popup-ending');
 const closePopupButton = document.getElementById('close-popup');
 const popupEndingHeader = document.getElementById('popup-ending-header');
 const popupEndingText = document.getElementById('popup-ending-text');
 const popupEndingImage = document.getElementById('popup-ending-image');
 
-for (let i = 1; i <= 26; i++) {
-  const button = document.createElement("button");
-  button.classList.add("ending-button-closed");
-  button.id = "end_" + i;
-  button.textContent = i;
-  endingsContainer.appendChild(button);
-} //добавляем кнопки концовок
-
-
-const endingButtons = document.querySelectorAll(".ending-button-closed, .ending-button-opened");
-// Получаем все кнопки концовок
-
 let avatarImage = document.querySelector(".button-avatar");
 let avatarImage1 = document.querySelector(".player-avatar");
 
+
 let openedEndings = [];
 let endings = {};
-
-
-for (let i = 1; i <= 26; i++) {
-  endings["end_" + i] = { header: "h" + i, text: "t" + i, image: "end" };
-} //создаём массив для концовок
-
-
-/*
-let player;
-
-    ysdk.getPlayer().then(_player => {
-        player = _player;
-        player.getData(['endings', 'Openedendings', 'avatar']).then(data => {
-          if (data.Openedendings) 
-  {
-          console.log('Loaded data:', data);
-          // Обработка загруженных данных
-          let loadedEndings = data.endings;
-          let loadedOpenedEndings = data.Openedendings;
-          let loadedAvatar = data.avatar;
-          
-          // Здесь можно выполнить нужные действия с загруженными данными
-          endings = endings;
-          openedEndings = loadedOpenedEndings;
-          avatarImage.src = loadedAvatar || 'resources/av1.png';
-          avatarImage1.src = loadedAvatar || 'resources/av1.png';
-
-  }
-  else {
-
-  }
-      }).catch(err => {
-          console.error('Error loading data:', err);
-      });  
-    }).catch(err => {
-  // Ошибка при инициализации объекта Player.
-    });
-*/
-
+let endingButtons = {};
 let passages;
-
-
-// Проходимся по каждой кнопке и устанавливаем фоновую картинку
-
-endingButtons.forEach(button => {
-  const endingId = button.id;
-  const ending = endings[endingId];
-  button.style.backgroundImage = `url(${ending.image})`;
-  button.style.backgroundSize = "cover";
-});
-
-
-//openedEndings.push("end_2") //добавили открытую концовку для теста
 
 fetch('story_1.json')
     .then(response => response.json())
-    .then(jsonResponse => passages = jsonResponse.passages);
+    .then(jsonResponse => {
+      passages = jsonResponse.passages;
+      loadEndings()
+    });
+
+const saveDataJson = localStorage.getItem(STORAGE_KEY);
+if (saveDataJson !== null) {
+  openedEndings = JSON.parse(saveDataJson);
+}
+
+showView(views.MAIN_MENU, views_styles.MAIN_MENU)
+
+function loadEndings(){
+  passages.forEach(passage => {
+    let tagsArray = passage.tags.split(" ");
+    let endTag = tagsArray.find(tag => tag.startsWith("end"));
+    let winTag = tagsArray.find(tag => tag.startsWith("win"));
+    let imgTag = tagsArray.find(tag => tag.startsWith("img"));
+    if (endTag){
+      endings[endTag] = { 
+        header: winTag ? 'Ты всех нагнул!' : 'Шож ты так...',
+        text: passage.cleanText,
+        image: imgTag ? 'resources/' + imgTag.slice(3) + '.jpg' : 'resources/cat.jpeg' };
+    }
+  });
+
+  for (let i = 1; i <= 26; i++) {
+    const button = document.createElement("button");
+    button.classList.add("ending-button-closed");
+    button.textContent = i;
+    endingButtonsContainer.appendChild(button);
+    button.addEventListener("click", function () {
+      showEndingPopup("end_" + i)
+    })
+    endingButtons["end_" + i] = button
+  }
+
+  Object.entries(endingButtons).forEach(([id, button]) => {
+    const ending = endings[id];
+    button.style.backgroundImage = `url(${ending.image})`;
+    button.style.backgroundSize = "cover";
+  });
+}
 
 startBtn.addEventListener("click", startGame);
 endingsBtn.addEventListener("click", openEndingsMenu)
 backToMenuBtn1.addEventListener("click", backToMenu)
 backToMenuBtn.addEventListener("click", backToMenu)
 closePopupButton.addEventListener('click', () => {
-  popupEnding.style.display = 'none';
+  hidePopup(views.POPUP_ENDING)
 });
-document.addEventListener("contextmenu", function(event) {
-  event.preventDefault();
-});
-
-
-for (const endingElement of endingsContainer.children) {
-  endingElement.addEventListener("click", function () {
-    showEndingPopup(endingElement.id)
-  })
-}
 
 
 function showEndingPopup(id) {
-  popupEnding.style.display = 'block'
+  console.log('showEndingPopup ' + id)
+  showPopup(views.POPUP_ENDING, views_styles.POPUP_ENDING)
+
   if (!openedEndings.includes(id)){
     popupEndingHeader.innerHTML = "Концовка не открыта"
     popupEndingText.innerHTML = "Концовка не открыта!"
     //popupEndingImage.src = endings[id].image;
-    popupEndingImage.src = "resources/22.png";
+    popupEndingImage.src = "resources/22.png"; 
     return
   }
   popupEndingHeader.innerHTML = endings[id].header
@@ -244,9 +221,7 @@ function selectAvatar(avatarPath) {
 function startGame() {
     console.log("start-game");
     showView(views.PASSAGE, views_styles.PASSAGE)
-
     var startPassage = passages.find(x => x.tags.includes("start"));
-    console.log(startPassage.name);
     loadPassage(startPassage.name);
 }
 
@@ -266,31 +241,12 @@ function loadPassage(passageName)
     } //картинки пассажам
 
     if(endTag){
-      openedEndings.push(endTag)
-      var endNumber = endTag.slice(4)
-      let winTag = tagsArray.find(tag => tag.startsWith("win"));
-      if (winTag){
-        eval("endings.end_" + endNumber + ".header = 'Ты всех нагнул!';");
-      } else {
-        eval("endings.end_" + endNumber + ".header = 'Шож ты так...';");
+      if (!openedEndings.includes(endTag)) {
+        openedEndings.push(endTag);
+        const saveDataJson = JSON.stringify(openedEndings);
+        localStorage.setItem(STORAGE_KEY, saveDataJson);
       }
-      eval("endings.end_" + endNumber + ".text = passage.cleanText;");
-      if (imgTag) {
-        var imgNumber = imgTag.slice(3);
-        eval("endings.end_" + endNumber + ".image = 'resources/" + imgNumber + ".jpg';");
-      } else {
-        eval("endings.end_" + endNumber + ".image = 'resources/cat.jpeg';");
-      }
-      player.setData({
-        endings: endings,
-        Openedendings: openedEndings,
-        avatar: avatarImage.src
-      }).then(() => {
-        console.log('Data is set');
-      }).catch(err => {
-        console.error('Error setting data:', err);
-      });
-    } //грузим только что открытую концовку
+    }
 
     while(optionButtons.firstChild) {
         optionButtons.removeChild(optionButtons.firstChild);
@@ -309,24 +265,17 @@ function openEndingsMenu()
 {
   showView(views.ENDINGS, views_styles.ENDINGS)
 
-  // Проходимся по каждой кнопке и устанавливаем фоновую картинку
-  
-  endingButtons.forEach(button => {
-    const endingId = button.id;
-    const ending = endings[endingId];
-    button.style.backgroundImage = `url(${ending.image})`;
-    button.style.backgroundSize = "cover";
-  });
- 
-  for (const endingElement of endingsContainer.children) {
-    if (openedEndings.includes(endingElement.id)){
-      endingElement.className = "ending-button-opened"
+  Object.entries(endingButtons).forEach(([id, button]) => {
+    if (openedEndings.includes(id)){
+      button.className = "ending-button-opened";
+      button.style.backgroundImage = `url(${endings[id].image})`;
+      button.style.backgroundSize = "cover";
     }
     else {
-      endingElement.className = "ending-button-closed"
+      button.className = "ending-button-closed"
+      button.style.backgroundImage = 'none';
     }
-  }
-  
+  });
 }
 
 function backToMenu()
