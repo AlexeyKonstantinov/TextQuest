@@ -1,4 +1,3 @@
-const mainMenu = document.getElementById("main-menu");
 const phrases = [
   "Готов к экшену?",
   "Ты будешь рассказывать об этом внукам 💯",
@@ -11,13 +10,69 @@ const mainText = document.getElementById("main-text");
 const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
 mainText.textContent = randomPhrase;
 
-const endingsMenu = document.getElementById("endings-menu");
+const views = {
+  MAIN_MENU: "view-main-menu",
+  PASSAGE: "view-passage",
+  ENDINGS: "view-endings-menu",
+  POPUP_ENDING: "popup-ending",
+};
+
+const views_styles = {
+  MAIN_MENU: "flex",
+  PASSAGE: "block",
+  ENDINGS: "block",
+  POPUP_ENDING: "block",
+};
+
+const view_state = {
+  currentScreen: null,
+  openedPopups: [],
+};
+
+function showView(viewId, displayStyle) {
+  if (view_state.currentScreen) {
+    view_state.currentScreen.style.display = "none";
+  }
+
+  const newScreen = document.getElementById(viewId);
+  if (newScreen) {
+    newScreen.style.display = displayStyle;
+    view_state.currentScreen = newScreen;
+  }
+
+  view_state.openedPopups.forEach(popup => {
+    popup.style.display = "none";
+  });
+  view_state.openedPopups.length = 0; // очистка массива
+}
+
+function openPopup(popupId, displayStyle) {
+  const popup = document.getElementById(popupId);
+  if (view_state.openedPopups.includes(popup)) {
+    return;
+  }
+  view_state.openedPopups.push(popup);
+  popup.style.display = displayStyle;
+}
+
+function closePopup(popupId){
+  const popup = document.getElementById(popupId);
+  const index = view_state.openedPopups.indexOf(popup);
+  if (index !== -1) {
+    view_state.openedPopups.splice(index, 1); // удаляем попап из списка открытых
+  }
+  if (popup) {
+    popup.style.display = "none";
+  }
+}
+
+showView(views.MAIN_MENU, views_styles.MAIN_MENU)
+
 const startBtn = document.getElementById("start-btn");
 const endingsBtn = document.getElementById("endings-btn");
 const backToMenuBtn1 = document.getElementById("back-to-menu-btn1");
 const backToMenuBtn = document.getElementById("back-to-menu-btn");
 const finishBtn = document.getElementById("finish-button")
-const passageElement = document.getElementById("passage");
 const passageImage = document.getElementById("passage-image");
 const passageText = document.getElementById("passage-text");
 const optionButtons = document.getElementById("option-buttons");
@@ -36,6 +91,7 @@ for (let i = 1; i <= 26; i++) {
   endingsContainer.appendChild(button);
 } //добавляем кнопки концовок
 
+
 const endingButtons = document.querySelectorAll(".ending-button-closed, .ending-button-opened");
 // Получаем все кнопки концовок
 
@@ -45,10 +101,13 @@ let avatarImage1 = document.querySelector(".player-avatar");
 let openedEndings = [];
 let endings = {};
 
+
 for (let i = 1; i <= 26; i++) {
-  endings["end_" + i] = { header: "h" + i, text: "t" + i, image: "img" };
+  endings["end_" + i] = { header: "h" + i, text: "t" + i, image: "end" };
 } //создаём массив для концовок
 
+
+/*
 let player;
 
     ysdk.getPlayer().then(_player => {
@@ -78,18 +137,20 @@ let player;
     }).catch(err => {
   // Ошибка при инициализации объекта Player.
     });
-
+*/
 
 let passages;
 
 
 // Проходимся по каждой кнопке и устанавливаем фоновую картинку
+
 endingButtons.forEach(button => {
   const endingId = button.id;
   const ending = endings[endingId];
   button.style.backgroundImage = `url(${ending.image})`;
   button.style.backgroundSize = "cover";
 });
+
 
 //openedEndings.push("end_2") //добавили открытую концовку для теста
 
@@ -99,7 +160,7 @@ fetch('story_1.json')
 
 startBtn.addEventListener("click", startGame);
 endingsBtn.addEventListener("click", openEndingsMenu)
-backToMenuBtn1.addEventListener("click", backToMenu1)
+backToMenuBtn1.addEventListener("click", backToMenu)
 backToMenuBtn.addEventListener("click", backToMenu)
 closePopupButton.addEventListener('click', () => {
   popupEnding.style.display = 'none';
@@ -108,11 +169,13 @@ document.addEventListener("contextmenu", function(event) {
   event.preventDefault();
 });
 
+
 for (const endingElement of endingsContainer.children) {
   endingElement.addEventListener("click", function () {
     showEndingPopup(endingElement.id)
   })
 }
+
 
 function showEndingPopup(id) {
   popupEnding.style.display = 'block'
@@ -180,10 +243,7 @@ function selectAvatar(avatarPath) {
 
 function startGame() {
     console.log("start-game");
-    mainMenu.style.display = "none";
-    passageElement.style.display = "block";
-    var Avpopup = document.querySelector('.av-popup');
-    Avpopup.style.display = 'none';
+    showView(views.PASSAGE, views_styles.PASSAGE)
 
     var startPassage = passages.find(x => x.tags.includes("start"));
     console.log(startPassage.name);
@@ -247,20 +307,17 @@ function loadPassage(passageName)
 
 function openEndingsMenu()
 {
-  mainMenu.style.display = "none";
-  endingsMenu.style.display = "block";
-  passageElement.style.display = "none";
-  var Avpopup = document.querySelector('.av-popup');
-  Avpopup.style.display = 'none';
+  showView(views.ENDINGS, views_styles.ENDINGS)
 
   // Проходимся по каждой кнопке и устанавливаем фоновую картинку
-endingButtons.forEach(button => {
-  const endingId = button.id;
-  const ending = endings[endingId];
-  button.style.backgroundImage = `url(${ending.image})`;
-  button.style.backgroundSize = "cover";
-});
-
+  
+  endingButtons.forEach(button => {
+    const endingId = button.id;
+    const ending = endings[endingId];
+    button.style.backgroundImage = `url(${ending.image})`;
+    button.style.backgroundSize = "cover";
+  });
+ 
   for (const endingElement of endingsContainer.children) {
     if (openedEndings.includes(endingElement.id)){
       endingElement.className = "ending-button-opened"
@@ -269,22 +326,12 @@ endingButtons.forEach(button => {
       endingElement.className = "ending-button-closed"
     }
   }
+  
 }
-
-function backToMenu1()
-{
-  mainMenu.style.display = "flex";
-  passageElement.style.display = "none";
-  const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
-  mainText.textContent = randomPhrase; //рандомная фраза в меню
-} 
 
 function backToMenu()
 {
-  mainMenu.style.display = "flex";
-  endingsMenu.style.display = "none";
-  popupEnding.style.display = "none"; 
-  //без багов, если открыта концовка в меню, то закрывает и её.
+  showView(views.MAIN_MENU, views_styles.MAIN_MENU)
   const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
-  mainText.textContent = randomPhrase; //рандомная фраза в меню
+  mainText.textContent = randomPhrase;
 } 

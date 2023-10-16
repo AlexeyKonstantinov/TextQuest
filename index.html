@@ -16,7 +16,7 @@
 <script defer src="game.js"></script>
 </head>
 <body>
-    <div class="main-menu" id="main-menu">
+    <div class="main-menu" id="view-main-menu" style="display: none;">
         <div class="avatar-container">
           <button class="avatar-button" onclick="openPopup()">
             <img class="button-avatar" src="resources/av1.png" alt="Player Avatar">
@@ -28,19 +28,19 @@
         <button id="endings-btn">Концовки</button>
       </div>
       
-      <div id="avatar-popup" class="av-popup">
+      <div id="avatar-popup" class="av-popup" style="display: none;" >
         <button class="avatar-select" onclick="selectAvatar('resources/av1.png')"></button>
-  <button class="avatar-select" onclick="selectAvatar('resources/av2.png')"></button>
-  <button class="avatar-select" onclick="selectAvatar('resources/av3.png')"></button>
-  <button class="avatar-select" onclick="selectAvatar('resources/av4.png')"></button>
-  <button class="avatar-select" onclick="selectAvatar('resources/av5.png')"></button>
-  <button class="avatar-select" onclick="selectAvatar('resources/av6.png')"></button>
-  <button class="avatar-select" onclick="selectAvatar('resources/av7.png')"></button>
-  <button class="avatar-select" onclick="selectAvatar('resources/av8.png')"></button>
+        <button class="avatar-select" onclick="selectAvatar('resources/av2.png')"></button>
+        <button class="avatar-select" onclick="selectAvatar('resources/av3.png')"></button>
+        <button class="avatar-select" onclick="selectAvataцr('resources/av4.png')"></button>
+        <button class="avatar-select" onclick="selectAvatar('resources/av5.png')"></button>
+        <button class="avatar-select" onclick="selectAvatar('resources/av6.png')"></button>
+        <button class="avatar-select" onclick="selectAvatar('resources/av7.png')"></button>
+        <button class="avatar-select" onclick="selectAvatar('resources/av8.png')"></button>
         <!-- Добавьте другие кнопки с аватарками по необходимости -->
       </div>
 
-    <div class="passage" id="passage">
+    <div class="passage" id="view-passage" style="display: none;">
         <div class="passage-image-wrapper">
             <img src="resources/1.jpg" class="passage-image" id="passage-image">
             <img src="resources/av1.png" class="player-avatar">
@@ -58,7 +58,7 @@
         <button class="finish-button" id="finish-button"> Меню</button>
     </div>-->
 
-    <div id="endings-menu" style="display: none;">
+    <div id="view-endings-menu" style="display: none;">
         <p id="endings-label-text">Концовки</p>
         <div id="endings-container">
             
