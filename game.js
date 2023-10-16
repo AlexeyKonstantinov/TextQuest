@@ -97,6 +97,13 @@ let endings = {};
 let endingButtons = {};
 let passages;
 
+const saveDataJson = localStorage.getItem(STORAGE_KEY);
+if (saveDataJson !== null) {
+  openedEndings = JSON.parse(saveDataJson);
+}
+
+showView(views.MAIN_MENU, views_styles.MAIN_MENU)
+
 fetch('story_1.json')
     .then(response => response.json())
     .then(jsonResponse => {
@@ -104,12 +111,6 @@ fetch('story_1.json')
       loadEndings()
     });
 
-const saveDataJson = localStorage.getItem(STORAGE_KEY);
-if (saveDataJson !== null) {
-  openedEndings = JSON.parse(saveDataJson);
-}
-
-showView(views.MAIN_MENU, views_styles.MAIN_MENU)
 
 function loadEndings(){
   passages.forEach(passage => {
