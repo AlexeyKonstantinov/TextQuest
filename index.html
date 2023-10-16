@@ -1,43 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TextQuest</title>
     <link rel="stylesheet" href="styles.css">
-    <script defer src="game.js"></script>
+    <!-- Yandex Games SDK -->
+<script src="https://yandex.ru/games/sdk/v2"></script>
+<script>
+    YaGames.init().then(ysdk => {
+        console.log('Yandex SDK initialized');
+        window.ysdk = ysdk;
+    });
+</script>
+<script defer src="game.js"></script>
 </head>
 <body>
     <div class="main-menu" id="main-menu">
-        <img src="resources/cat.jpeg" class="main-menu-icon">
-        <p class="main-text" id="main-text">Привет! Добро пожаловать в игру "Побег из тюрьмы" 😈</p>
-        <button class="main-button" id="start-btn">Start</button>
-        <button  id="endings-btn">Endings</button>
-    </div>
+        <div class="avatar-container">
+          <button class="avatar-button" onclick="openPopup()">
+            <img class="button-avatar" src="resources/av1.png" alt="Player Avatar">
+          </button>
+        </div>
+        <img src="resources/1.jpg" class="main-menu-icon">
+        <p class="main-text" id="main-text">Рандомный текст</p>
+        <button class="main-button" id="start-btn">Играть</button>
+        <button id="endings-btn">Концовки</button>
+      </div>
+      
+      <div id="avatar-popup" class="av-popup">
+        <button class="avatar-select" onclick="selectAvatar('resources/av1.png')"></button>
+  <button class="avatar-select" onclick="selectAvatar('resources/av2.png')"></button>
+  <button class="avatar-select" onclick="selectAvatar('resources/av3.png')"></button>
+  <button class="avatar-select" onclick="selectAvatar('resources/av4.png')"></button>
+  <button class="avatar-select" onclick="selectAvatar('resources/av5.png')"></button>
+  <button class="avatar-select" onclick="selectAvatar('resources/av6.png')"></button>
+  <button class="avatar-select" onclick="selectAvatar('resources/av7.png')"></button>
+  <button class="avatar-select" onclick="selectAvatar('resources/av8.png')"></button>
+        <!-- Добавьте другие кнопки с аватарками по необходимости -->
+      </div>
 
-    <div class="passage" id="passage" style="display: none" >
-        <img src="resources/cat.jpeg" class="passage-image" id="passage-image" src="resources/cat.jpg">
+    <div class="passage" id="passage">
+        <div class="passage-image-wrapper">
+            <img src="resources/1.jpg" class="passage-image" id="passage-image">
+            <img src="resources/av1.png" class="player-avatar">
+        </div>
         <p class="passage-text" id="passage-text">Текст Пассажа</p>
         <div class="option-buttons" id="option-buttons">
-
+        
         </div>
+        <button class="main-button" id="back-to-menu-btn1"> Меню</button>
     </div>
 
-    <div class="finish-menu" id="finish-menu" style="display: none;">
+     <!--<div class="finish-menu" id="finish-menu" style="display: none;">
         <img src="resources/cat.jpeg" class="finish-menu-image">
         <p class="finish-menu-text" id="finish-menu-text">конец</p>
         <button class="finish-button" id="finish-button"> Меню</button>
-    </div>
+    </div>-->
 
     <div id="endings-menu" style="display: none;">
         <p id="endings-label-text">Концовки</p>
         <div id="endings-container">
-            <button class="ending-button-closed" id="end_1">Концовка 1</button>
-            <button class="ending-button-closed" id="end_2">Концовка 2</button>
-            <button class="ending-button-closed" id="end_3">Концовка 3</button>
-            <button class="ending-button-closed" id="end_4">Концовка 4</button>
-            <button class="ending-button-closed" id="end_5">Концовка 5</button>
-            <button class="ending-button-closed" id="end_6">Концовка 6</button>
+            
         </div>
         <button class="main-button" id="back-to-menu-btn"> Меню</button>
     </div>
@@ -46,6 +70,7 @@
         <div class="popup-content">
             <span id="close-popup" class="close-popup">&times;</span>
             <h2 id="popup-ending-header">Заголовок концовки</h2>
+            <img src="resources/22.png" class="popup-ending-image" id="popup-ending-image">
             <p id="popup-ending-text">Текст концовки</p>
         </div>
     </div>

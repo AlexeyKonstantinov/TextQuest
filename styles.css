@@ -1,3 +1,5 @@
+@media (orientation: landscape) /* Медиа-запрос для горизонтального экрана */
+ {
 body, html {
     margin: 0;
     height: 100%;
@@ -6,14 +8,111 @@ body, html {
     background-color: #333333; /* дополнительное свойство для изменения цвета фона */
 }
 
+img {
+    pointer-events: none;
+  }
+
 .main-menu {
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    user-select: none;
+    position: relative; /* Добавлено */
 }
 
+.avatar-container {
+    position: absolute; /* Изменено */
+    top: 15%;
+    left: 20%; /* Добавлено */
+    display: inline-block;
+  }
+  
+  .avatar-button {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .button-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #e4a010;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .av-popup {
+    display: none;
+    position: fixed;
+    width: 50%;
+    max-width: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(117, 117, 117, 0.8);
+    padding: 20px;
+    border: 1px solid #e4a010;
+    z-index: 9999;
+    user-select: none;
+  }
+
+  .av-popup .avatar-select {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .av-popup .avatar-select:last-child {
+    margin-right: 0;
+  }
+
+  .avatar-select {
+    background-size: cover;
+    background-position: center;
+    display: block;
+    margin-bottom: 10px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #e4a010; /* добавляем рамку */
+  }
+
+  .av-popup .avatar-select:nth-child(1) {
+    background-image: url('resources/av1.png');
+    }
+
+    .av-popup .avatar-select:nth-child(2) {
+    background-image: url('resources/av2.png');
+    }
+
+    .av-popup .avatar-select:nth-child(3) {
+    background-image: url('resources/av3.png');
+    }
+
+    .av-popup .avatar-select:nth-child(4) {
+    background-image: url('resources/av4.png');
+    }
+
+    .av-popup .avatar-select:nth-child(5) {
+    background-image: url('resources/av5.png');
+    }
+
+    .av-popup .avatar-select:nth-child(6) {
+    background-image: url('resources/av6.png');
+    }
+
+    .av-popup .avatar-select:nth-child(7) {
+    background-image: url('resources/av7.png');
+    }
+
+    .av-popup .avatar-select:nth-child(8) {
+    background-image: url('resources/av8.png');
+    }
+  
 .container {
     height: 100%;
     display: flex;
@@ -29,23 +128,67 @@ body, html {
 }
 
 
+@media (min-height: 1441px) {
+    .main-menu-icon {
+        max-width: 512px;
+        max-height: 512px;
+        display: block;
+        margin: 10px auto 10px; /* отступ сверху, выровнено по центру, отступ снизу */
+        border-radius: 10px; /* скругление углов изображения */
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3); /* тень под изображением */
+    }
+}
 
-.main-menu-icon {
-    max-width: 400px;
-    max-height: 400px;
-    display: block;
-    margin: 10px auto 10px; /* отступ сверху, выровнено по центру, отступ снизу */
-    border-radius: 10px; /* скругление углов изображения */
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3); /* тень под изображением */
+@media (max-height: 1440px) {
+    .main-menu-icon {
+        max-width: 50vh;
+        max-height: 50vh;
+        display: block;
+        margin: 10px auto 10px; /* отступ сверху, выровнено по центру, отступ снизу */
+        border-radius: 10px; /* скругление углов изображения */
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3); /* тень под изображением */
+    }
 }
 
 .passage-image {
-    max-width: 400px;
-    max-height: 400px;
+    max-width: 50vh;
+    max-height: 50vh;
     display: block;
     margin: 10px auto 10px; /* отступ сверху, выровнено по центру, отступ снизу */
     border-radius: 10px; /* скругление углов изображения */
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3); /* тень под изображением */
+
+}
+
+@media (min-height: 1441px) {
+    .passage-image-wrapper {
+        left: 50%;
+        transform: translateX(-50%);
+        position: relative;
+        max-width: 512px;
+        max-height: 512px;
+    }
+}
+
+@media (max-height: 1440px) {
+    .passage-image-wrapper {
+        left: 50%;
+        transform: translateX(-50%);
+        position: relative;
+        max-width: 50vh;
+        max-height: 50vh;
+    }
+}
+
+.player-avatar {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 15%;
+    height: 15%;
+    border-radius: 50%;
+    border: 2px solid #e4a010;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .finish-menu-image {
@@ -63,17 +206,18 @@ body, html {
 .main-text {
     width: 100%;
     text-align: center;
-    font-size: 18px; /* увеличение размера текста */
-    margin: 10px auto 40px; /* увеличение отступов */
+    font-size: 18px;
+    margin: 10px auto 40px;
     color: #333333;
     background-color: #e4a010;
-    padding: 40px; /* добавление внутренних отступов */
-    border-radius: 10px;
+    border-radius: 15px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
 
 .passage-text {
-    height: 15vh;
+    height: 12vh;
     text-align: center;
     font-size: 18px; /* увеличение размера текста */
     margin: 20px auto 15px; /* увеличение отступов */
@@ -88,6 +232,38 @@ body, html {
     height: 100%;
     align-items: center;
     justify-content: center;
+    display: flex;
+    user-select: none;
+}
+
+#back-to-menu-btn1 {
+    width: 80%;
+    background-color: #ff8b07;
+    color: rgb(0, 0, 0);
+    padding: 5px 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 7px; /* Добавлено свойство margin-top для уменьшения отступа сверху */
+      /* Выравнивание по центру */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto; /* Добавлено свойство margin */
+}
+
+#back-to-menu-btn1:hover {
+    background-color: #ff674f; /* цвет фона при наведении */
+}
+
+#back-to-menu-btn1:hover::after {
+    content: "# (Вышвырнет из игры!)";
+}
+
+#back-to-menu-btn1:active {
+    background-color: #ff4800; /* цвет фона при нажатии */
 }
 
 .finish-menu {
@@ -123,6 +299,31 @@ body, html {
     background-color: #FFA000; /* цвет фона при нажатии */
 }
 
+#endings-btn {
+    width: 50%;
+    background-color: #FFC107;
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+    /* Выравнивание по центру */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#endings-btn:hover {
+    background-color: #FFD54F; /* цвет фона при наведении */
+}
+
+#endings-btn:active {
+    background-color: #FFA000; /* цвет фона при нажатии */
+}
+
 .option-buttons {
     display: flex;
     flex-direction: column;
@@ -133,7 +334,7 @@ body, html {
     width: 80%;
     background-color: #FFC107;
     color: rgb(0, 0, 0);
-    padding: 10px 20px;
+    padding: 5px 20px;
     margin-bottom: 5px;
     border-radius: 5px;
     font-size: 18px;
@@ -149,38 +350,689 @@ body, html {
     background-color: #FFA000;
 }
 
-.ending-button-opened {
-    background-color: #ff9797;
+#endings-menu {
+    user-select: none;
+}
+
+#endings-label-text {
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    color: #FFC107;
 }
 
 .ending-button-closed {
     background-color: #4a4444;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px;
+    cursor: pointer;
+    width: 8vw;
+    height: 8vw;
+    border-radius: 10px; /* Добавлено свойство border-radius */
 }
+
+.ending-button-opened {
+    background-color: #e4a010;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px;
+    cursor: pointer;
+    width: 8vw;
+    height: 8vw;
+    border-radius: 10px; /* Добавлено свойство border-radius */
+}
+
+#back-to-menu-btn {
+    width: 80%;
+    background-color: #FFC107;
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+    /* Выравнивание по центру */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Прижимаем к нижней части экрана */
+        /* Прижимаем к нижней части экрана */
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+}
+
+#back-to-menu-btn:hover {
+    background-color: #FFD54F; /* цвет фона при наведении */
+}
+
+#back-to-menu-btn:active {
+    background-color: #FFA000; /* цвет фона при нажатии */
+}
+
 
 .popup-ending {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    width: 80%;
+    height: 80%;
+    background-color: rgba(255, 213, 79, 0.5); /* Изменен цвет фона на #e4a010 */
+    margin-top: 50px;
     align-items: center;
     justify-content: center;
+    border: 2px solid #e4a010; /* Добавлен контур */
+    border-radius: 10px; /* Добавлен радиус закругления углов */
+    left: 50%;
+    transform: translateX(-50%);
+    user-select: none;
 }
 
+
+@media (min-height: 1441px) {
+    .popup-ending-image {
+        max-width: 512px;
+        max-height: 512px;
+        display: block;
+        margin: 10px auto 10px; /* отступ сверху, выровнено по центру, отступ снизу */
+        border-radius: 10px; /* скругление углов изображения */
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3); /* тень под изображением */
+    }
+}
+
+@media (max-height: 1440px) {
+    .popup-ending-image {
+        max-width: 300px;
+        max-height: 300px;
+        display: block;
+        margin: 10px auto 10px; /* отступ сверху, выровнено по центру, отступ снизу */
+        border-radius: 10px; /* скругление углов изображения */
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3); /* тень под изображением */
+    }
+}
+
+
 .popup-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     text-align: center;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-top: -10px; /* Добавлено свойство margin-top для уменьшения отступа сверху */
 }
 
 .close-popup {
     position: absolute;
     top: 10px;
     right: 10px;
-    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    background-color: #e4a010; /* Изменен цвет фона на #e4a010 */
+    border-radius: 50%; /* Сделана кнопка круглой */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    user-select: none;
 }
+
+.close-popup::before, .close-popup::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background-color: black; /* Изменен цвет на чёрный */
+}
+
+.close-popup::before {
+    transform: rotate(45deg);
+}
+
+.close-popup::after {
+    transform: rotate(-45deg);
+}
+
+}
+
+/* Медиа-запрос для вертикального экрана */
+@media (orientation: portrait) {
+    body, html {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        font-family: 'Roboto', sans-serif; /* шрифт */
+        background-color: #333333; /* дополнительное свойство для изменения цвета фона */
+    }
+    
+    img {
+        pointer-events: none;
+      }
+    
+    .main-menu {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        user-select: none;
+        position: relative; /* Добавлено */
+    }
+    
+    .avatar-container {
+        position: absolute; /* Изменено */
+        top: 27%;
+        left: 7%; /* Добавлено */
+        display: inline-block;
+      }
+      
+      .avatar-button {
+        padding: 0;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+      
+      .button-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 2px solid #e4a010;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+    
+      .av-popup {
+        display: none;
+        position: fixed;
+        width: 70%;
+        max-width: 70%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(132, 132, 132, 0.8);
+        padding: 20px;
+        border: 1px solid #e4a010;
+        z-index: 9999;
+      }
+    
+      .av-popup .avatar-select {
+        display: inline-block;
+        margin-right: 10px;
+        background-size: cover;
+    background-position: center;
+      }
+      .av-popup .avatar-select:last-child {
+        margin-right: 0;
+      }
+    
+      .avatar-select {
+        display: block;
+        margin-bottom: 10px;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+      }
+    
+      .av-popup .avatar-select:nth-child(1) {
+        background-image: url('resources/av1.png');
+        }
+    
+        .av-popup .avatar-select:nth-child(2) {
+        background-image: url('resources/av2.png');
+        }
+    
+        .av-popup .avatar-select:nth-child(3) {
+        background-image: url('resources/av3.png');
+        }
+    
+        .av-popup .avatar-select:nth-child(4) {
+        background-image: url('resources/av4.png');
+        }
+    
+        .av-popup .avatar-select:nth-child(5) {
+        background-image: url('resources/av5.png');
+        }
+    
+        .av-popup .avatar-select:nth-child(6) {
+        background-image: url('resources/av6.png');
+        }
+    
+        .av-popup .avatar-select:nth-child(7) {
+        background-image: url('resources/av7.png');
+        }
+    
+        .av-popup .avatar-select:nth-child(8) {
+        background-image: url('resources/av8.png');
+        }
+    
+    .container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #F8F8F8; /* красивый цвет фона */
+    }
+    
+    .logo {
+        max-width: 200px;
+        margin-bottom: 40px; /* отступ снизу */
+    }
+    
+
+    @media (min-width: 601px) {
+        .main-menu-icon {
+            max-width: min(512px, 40vh);
+            max-height: min(512px, 40vh);
+            display: block;
+            margin: 10px auto 10px; /* отступ сверху, выровнено по центру, отступ снизу */
+            border-radius: 10px; /* скругление углов изображения */
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3); /* тень под изображением */
+        }
+    }
+    
+    @media (max-width: 600px) {
+        .main-menu-icon {
+            max-width: min(400px, 40vh);
+            max-height: min(400px, 40vh);
+            display: block;
+            margin: 10px auto 10px; /* отступ сверху, выровнено по центру, отступ снизу */
+            border-radius: 10px; /* скругление углов изображения */
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3); /* тень под изображением */
+        }
+    }
+
+    @media (min-width: 601px) {
+        .passage-image {
+            max-width: 512px;
+            max-height: 512px;
+            display: block;
+            margin: 10px auto 10px; /* отступ сверху, выровнено по центру, отступ снизу */
+            border-radius: 10px; /* скругление углов изображения */
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3); /* тень под изображением */
+        
+        }  
+    }
+    
+    @media (max-width: 600px) {
+        .passage-image {
+            max-width: 40vh;
+            max-height: 40vh;
+            display: block;
+            margin: 10px auto 10px; /* отступ сверху, выровнено по центру, отступ снизу */
+            border-radius: 10px; /* скругление углов изображения */
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3); /* тень под изображением */
+        
+        } 
+    }
+    @media (min-width: 601px) {
+        .passage-image-wrapper {
+            left: 50%;
+            transform: translateX(-50%);
+            position: relative;
+            max-width: 512px;
+            max-height: 512px;
+        }  
+    }
+    
+    @media (max-width: 600px) {
+        .passage-image-wrapper {
+            left: 50%;
+            transform: translateX(-50%);
+            position: relative;
+            max-width: 40vh;
+            max-height: 40vh;
+        }
+    }
+    
+
+    
+    .player-avatar {
+        position: absolute;
+        top: 5%;
+        left: 5%;
+        width: 15%;
+        height: 15%;
+        border-radius: 50%;
+        border: 2px solid #e4a010;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .finish-menu-image {
+        max-width: 400px;
+        max-height: 400px;
+        display: block;
+        margin: 0 auto; /* изображение выровнено по центру */
+        margin-bottom: 40px; /* отступ снизу */
+        border-radius: 10px; /* скругление углов изображения */
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3); /* тень под изображением */
+    }
+    
+    
+    @media (min-width: 601px) {
+        
+    }
+    
+    @media (max-width: 600px) {
+        
+    }
+    .main-text {
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+        margin: 10px auto 40px;
+        color: #333333;
+        background-color: #e4a010;
+        border-radius: 15px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    
+    @media (min-width: 601px) {
+        
+    }
+    
+    @media (max-width: 600px) {
+        
+    }
+    .passage-text {
+        height: 12vh;
+        text-align: center;
+        font-size: 18px; /* увеличение размера текста */
+        margin: 20px auto 15px; /* увеличение отступов */
+        color: #333333;
+        background-color: #e4a010;
+        padding: 10px; /* добавление внутренних отступов */
+        border-radius: 10px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .passage {
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        user-select: none;
+    }
+    
+    #back-to-menu-btn1 {
+        width: 80%;
+        background-color: #ff8b07;
+        color: rgb(0, 0, 0);
+        padding: 5px 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 7px; /* Добавлено свойство margin-top для уменьшения отступа сверху */
+          /* Выравнивание по центру */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto; /* Добавлено свойство margin */
+    }
+    
+    #back-to-menu-btn1:hover {
+        background-color: #ff674f; /* цвет фона при наведении */
+    }
+    
+    #back-to-menu-btn1:hover::after {
+        content: "# (Вышвырнет из игры!)";
+    }
+    
+    #back-to-menu-btn1:active {
+        background-color: #ff4800; /* цвет фона при нажатии */
+    }
+    
+    .finish-menu {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    #start-btn {
+        width: 50%;
+        background-color: #FFC107;
+        color: rgb(0, 0, 0);
+        padding: 10px 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        
+        /* Выравнивание по центру */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    #start-btn:hover {
+        background-color: #FFD54F; /* цвет фона при наведении */
+    }
+    
+    #start-btn:active {
+        background-color: #FFA000; /* цвет фона при нажатии */
+    }
+    
+    #endings-btn {
+        width: 50%;
+        background-color: #FFC107;
+        color: rgb(0, 0, 0);
+        padding: 10px 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        
+        /* Выравнивание по центру */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    #endings-btn:hover {
+        background-color: #FFD54F; /* цвет фона при наведении */
+    }
+    
+    #endings-btn:active {
+        background-color: #FFA000; /* цвет фона при нажатии */
+    }
+
+    
+    .option-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .option-button {
+        width: 80%;
+        background-color: #FFC107;
+        color: rgb(0, 0, 0);
+        padding: 5px 20px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    .option-button:hover {
+        background-color: #FFD54F;
+    }
+    
+    .option-button:active {
+        background-color: #FFA000;
+    }
+    
+    #endings-menu {
+        user-select: none;
+    }
+    
+    #endings-label-text {
+        text-align: center;
+        font-weight: bold;
+        font-size: 24px;
+        color: #FFC107;
+    }
+    
+    .ending-button-closed {
+        background-color: #4a4444;
+        border: none;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px;
+        cursor: pointer;
+        width: 11vw;
+        height: 11vw;
+        border-radius: 10px; /* Добавлено свойство border-radius */
+    }
+    
+    .ending-button-opened {
+        background-color: #e4a010;
+        border: none;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px;
+        cursor: pointer;
+        width: 11vw;
+        height: 11vw;
+        border-radius: 10px; /* Добавлено свойство border-radius */
+    }
+    
+    #back-to-menu-btn {
+        width: 80%;
+        background-color: #FFC107;
+        color: rgb(0, 0, 0);
+        padding: 10px 20px;
+        
+        border-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        
+        /* Выравнивание по центру */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* Прижимаем к нижней части экрана */
+            /* Прижимаем к нижней части экрана */
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+    }
+    
+    #back-to-menu-btn:hover {
+        background-color: #FFD54F; /* цвет фона при наведении */
+    }
+    
+    #back-to-menu-btn:active {
+        background-color: #FFA000; /* цвет фона при нажатии */
+    }
+    
+    
+    .popup-ending {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 80%;
+        height: 80%;
+        background-color: rgba(255, 213, 79, 0.5); /* Изменен цвет фона на #e4a010 */
+        margin-top: 50px;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #e4a010; /* Добавлен контур */
+        border-radius: 10px; /* Добавлен радиус закругления углов */
+        left: 50%;
+        transform: translateX(-50%);
+        user-select: none;
+    }
+    
+    .popup-ending-image {
+        max-width: 300px;
+        max-height: 300px;
+        display: block;
+        margin: 10px auto 10px; /* отступ сверху, выровнено по центру, отступ снизу */
+        border-radius: 10px; /* скругление углов изображения */
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3); /* тень под изображением */
+    }
+    
+    
+    .popup-content {
+        text-align: center;
+        font-size: 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        margin-top: -10px; /* Добавлено свойство margin-top для уменьшения отступа сверху */
+    }
+    
+    .close-popup {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        background-color: #e4a010; /* Изменен цвет фона на #e4a010 */
+        border-radius: 50%; /* Сделана кнопка круглой */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        user-select: none;
+    }
+    
+    .close-popup::before, .close-popup::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 2px;
+        background-color: black; /* Изменен цвет на чёрный */
+    }
+    
+    .close-popup::before {
+        transform: rotate(45deg);
+    }
+    
+    .close-popup::after {
+        transform: rotate(-45deg);
+    }
+    
+    /* Здесь вы можете добавлять стили для вертикального экрана */
+  }
