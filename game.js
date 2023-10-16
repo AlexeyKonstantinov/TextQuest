@@ -154,7 +154,6 @@ closePopupButton.addEventListener('click', () => {
 
 
 function showEndingPopup(id) {
-  console.log('showEndingPopup ' + id)
   showPopup(views.POPUP_ENDING, views_styles.POPUP_ENDING)
 
   if (!openedEndings.includes(id)){
